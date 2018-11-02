@@ -1,3 +1,3 @@
 # Systems_Work12
 Systems Work 12
-please check at 22:00
+didn't do the print directory tree stuff, probably gonna do it tomorrow.
