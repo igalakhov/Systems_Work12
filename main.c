@@ -18,8 +18,14 @@ char * formatsize(int size){
 }
 
 void printdir(char * dir){
-  DIR * curdir;
+	    
+	DIR * curdir;
 	curdir = opendir(dir);
+
+	if(!curdir){
+		printf(" Directory doesn't exist!!!\n");
+		exit(1);
+	}
 
 	struct dirent * cur;
 	cur = readdir(curdir);
@@ -48,25 +54,21 @@ void printdir(char * dir){
 	closedir(curdir);
 }
 
-int main(){
-	printdir(s);
+int main(int argc, char * argv[]){
+	char * dir;
+    if(argc > 1){
+		// use command line input
+		dir = argv[1];
+    } else {
+		// ask user for input
+		printf("No directory specified, please enter one: ");
+		scanf("%s", dir);
+    }
+	//fget();
+	printdir(dir);
 
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
