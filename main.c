@@ -55,19 +55,21 @@ void printdir(char * dir){
 }
 
 int main(int argc, char * argv[]){
-	char * dir;
+	char dir[256];
+	char *dir2;
     if(argc > 1){
 		// use command line input
-		dir = argv[1];
+		dir2 = argv[1];
+		printdir(dir2);
     } else {
 		// ask user for input
 		printf("No directory specified, please enter one: ");
-		scanf("%s", dir);
+		scanf("%s",dir);
+		printdir(dir);
     }
-	//fget();
-	printdir(dir);
+	
 
-	return 0;
+    return 0;
 }
 
 
