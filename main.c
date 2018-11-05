@@ -18,7 +18,7 @@ char * formatsize(int size){
 }
 
 void printdir(char * dir){
-	    
+
 	DIR * curdir;
 	curdir = opendir(dir);
 
@@ -33,24 +33,29 @@ void printdir(char * dir){
 	int dirsize = 0;
 	char * dirs = malloc(1);
 	char * files = malloc(1);
-		
-	while(cur = readdir(curdir)){
-		if(cur->d_type == 4){		
+
+	struct stat file;
+
+	while((cur = readdir(curdir))){
+		if(cur->d_type == DT_DIR){
 			dirs = realloc(dirs, sizeof(dirs) + sizeof(cur->d_name));
-				
+
 			strcat(dirs, cur->d_name);
-			strcat(dirs, "\n");
-		}
-		else if(cur->d_type == 8){
-			files = realloc(files, sizeof(files) + sizeof(cur->d_name));		
+			strcat(dirs, "\n ");
+		} else {
+			files = realloc(files, sizeof(files) + sizeof(cur->d_name) + 2); // 2 for space and newline
 			strcat(files, cur->d_name);
-			strcat(files, "\n");
-				
+			strcat(files, "\n ");
+
+			// statistics
+			stat(cur->d_name, &file);
+
+			dirsize += file.st_size;
 		}
 	}
-	
-	printf("Directory entry:\n%s\n", dirs);
-	printf("File entry:\n%s", files);
+	printf("Total directory size: %s\n", formatsize(dirsize));
+	printf("Directory entries:\n %s\n", dirs);
+	printf("File entries:\n %s", files);
 	closedir(curdir);
 }
 
@@ -67,10 +72,6 @@ int main(int argc, char * argv[]){
 		scanf("%s",dir);
 		printdir(dir);
     }
-	
-
+		printf("\n");
     return 0;
 }
-
-
-
